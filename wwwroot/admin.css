@@ -1,7 +1,7 @@
 body{
     margin:0;
     font-family:Arial;
-    background:#181818;
+    background:#0f172a;
     color:white;
 }
 
@@ -50,7 +50,7 @@ body{
 
 .sidebar{
     width:220px;
-    background:#2a2a2a;
+    background:#1e293b;
     padding:20px;
     box-sizing:border-box;
 }
@@ -64,7 +64,7 @@ body{
     padding:12px;
     margin-bottom:10px;
 
-    background:#3f3f3f;
+    background:#334155;
     border:none;
     color:white;
 
@@ -73,7 +73,7 @@ body{
 }
 
 .sidebar button:hover{
-    background:#555555;
+    background:#475569;
 }
 
 /* =========================
@@ -92,7 +92,7 @@ body{
 ========================= */
 
 .card{
-    background:#2a2a2a;
+    background:#1e293b;
     padding:20px;
     border-radius:10px;
 
@@ -124,7 +124,7 @@ select{
     padding:12px;
     margin-bottom:10px;
 
-    background:#3f3f3f;
+    background:#334155;
     border:none;
     color:white;
 
@@ -149,7 +149,7 @@ button{
 }
 
 .item{
-    background:#2a2a2a;
+    background:#1e293b;
 
     padding:12px;
     margin-bottom:10px;
@@ -175,7 +175,7 @@ button{
     width:100%;
     max-width:700px;
 
-    background:#2a2a2a;
+    background:#1e293b;
 
     border-radius:8px;
     overflow:hidden;
@@ -187,7 +187,7 @@ button{
 
     padding:12px;
 
-    background:#3f3f3f;
+    background:#334155;
     font-weight:bold;
 }
 
@@ -202,11 +202,11 @@ button{
 
     padding:12px;
 
-    border-top:1px solid #3f3f3f;
+    border-top:1px solid #334155;
 }
 
 .grid-row:hover{
-    background:#555555;
+    background:#475569;
 }
 
 .grid-header span,
@@ -225,24 +225,24 @@ button{
 }
 
 .resultados-clientes{
-    background:#2a2a2a;
+    background:#1e293b;
     border-radius:8px;
     margin-top:5px;
 
     max-height:250px;
     overflow-y:auto;
 
-    border:1px solid #3f3f3f;
+    border:1px solid #334155;
 }
 
 .resultado-item{
     padding:10px;
     cursor:pointer;
-    border-bottom:1px solid #3f3f3f;
+    border-bottom:1px solid #334155;
 }
 
 .resultado-item:hover{
-    background:#3f3f3f;
+    background:#334155;
 }
 
 /* =========================
@@ -342,7 +342,7 @@ button{
 
 .grid-cliente-vazio{
     padding:14px 12px;
-    color:#bdbdbd;
+    color:#94a3b8;
 }
 
 .pesquisa-historico{
