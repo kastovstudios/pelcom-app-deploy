@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    background: #2c2c3e;
+    background: #17122994;
     padding: 30px;
     border-radius: 10px;
     width: 400px;
@@ -93,7 +93,7 @@ body {
 
 /* CARD */
 .card {
-    background: #2c2c3f;
+    background: #161635;
     padding: 15px;
     border-radius: 10px;
     text-align: center;
@@ -151,7 +151,7 @@ body {
 }
 
 .card {
-    border: 1px solid #444;
+    border: 1px solid #444444;  
     padding: 15px;
     text-align: center;
     background-color: #2c2f4a;
@@ -356,36 +356,54 @@ body > * {
     z-index: 1;
 }
 
-/* Marca d'água visível dentro dos painéis das páginas do usuário.
-   Os painéis usam fundo sólido (#303030), por isso a marca aplicada apenas
-   no body ficava escondida atrás deles. */
-.container {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
+body {
+    background-color: #020629;
+
+    background-image:
+        linear-gradient(rgba(3, 1, 54, 0.649) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 1, 45, 0.319) 1px, transparent 1px),
+        radial-gradient(circle at 18% 20%, rgba(177,22,35,.035), transparent 26%),
+        radial-gradient(circle at 82% 72%, rgba(177,22,35,.025), transparent 28%);
+
+    background-size: 3px 3px, 5px 5px, auto, auto;
+
+    color: #e5e5e5;
+    margin: 0;
+    min-height: 100vh;
 }
+
+
 
 .container::before {
     content: "";
     position: absolute;
+
     top: 50%;
     left: 50%;
-    width: clamp(1280px, 36vw, 500px);
-    height: clamp(720px, 36vw, 500px);
+
+    width: clamp(300px, 55vw, 1280px);
+    height: clamp(300px, 55vw, 720px);
+
     transform: translate(-50%, -50%);
-    background: url('fundo-aeromovel.png') center / contain no-repeat;
+
+    background:
+        url('fundo-aeromovel.png')
+        center / contain
+        no-repeat;
+
     opacity: 0.08;
+
     pointer-events: none;
     z-index: 0;
 }
 
-/* Garante que o conteúdo continue acima da marca d'água. */
 .container > * {
     position: relative;
     z-index: 1;
 }
 
 @media (max-width: 768px) {
+
     .container::before {
         width: min(150vw, 500px);
         height: min(150vw, 500px);
