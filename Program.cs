@@ -841,10 +841,10 @@ app.MapGet("/admin/mensagens-cobranca/{periodoId}",
 
         string mensagem =
             $"Bom dia {nomeCompleto}!\n" +
-            $"Segue o valor do que consumiu na CCAP durante o mês de {nomePeriodo}.\n" +
+            $"Segue o valor do que consumiu no PelCom durante o mês de {nomePeriodo}.\n" +
             $"Valor: R$ {total:F2}.\n\n" +
-            $"Pix: matheusmatft@gmail.com\n\n" +
-            $"*Banco NEON*\n\n" +
+            $"Pix: 12988009696\n\n" +
+            $"*PICPAY*\n\n" +
             $"FAVOR ENVIAR O COMPROVANTE APÓS O PAGAMENTO\n" +
             $"Obs: Caso tenha alguma dúvida sobre valores ou algum item, " +
             $"só mencionar que verificamos.";
@@ -1161,10 +1161,10 @@ app.MapPost("/admin/cobrar-clientes/{periodoId}", async (int periodoId, HttpRequ
     {
         string mensagem =
             $"Bom dia {cliente.Posto} {cliente.Nome}!\n" +
-            $"Segue o valor do que consumiu na CCAP durante o mês anterior\n" +
+            $"Segue o valor do que consumiu no PelCom durante o mês anterior\n" +
             $"Valor: R$ {cliente.Total:F2}.\n\n" +
-            $"Pix: matheusmatft@gmail.com\n\n" +
-            $"*Banco NEON*\n\n"+
+            $"Pix: 12988009696\n\n" +
+            $"*PICPAY*\n\n"+
             $"FAVOR ENVIAR O COMPROVANTE APÓS O PAGAMENTO\n"+
             $"Obs: Caso tenha alguma dúvida sobre valores ou algum item, só mencionar que verificamos assinatura.";
 
@@ -1261,10 +1261,10 @@ app.MapPost("/admin/cobrar-cliente", async (CobrarClienteDTO dto, HttpRequest re
 
     string mensagem =
         $"Bom dia {posto} {nome}!\n" +
-        $"Segue o valor do que consumiu na CCAP durante o mês anterior\n" +
+        $"Segue o valor do que consumiu no PelCom durante o mês anterior\n" +
         $"Valor: R$ {total:F2}.\n\n" +
-        $"Pix: matheusmatft@gmail.com\n\n" +
-        $"*Banco NEON*\n\n" +
+        $"Pix: 12988009696\n\n" +
+        $"*PICPAY*\n\n" +
         $"FAVOR ENVIAR O COMPROVANTE APÓS O PAGAMENTO\n" +
         $"Obs: Caso tenha alguma dúvida sobre valores ou algum item, só mencionar que verificamos.";
 
