@@ -448,3 +448,35 @@ body > * {
     position: relative;
     z-index: 1;
 }
+
+
+/* Ordenação da tabela de clientes */
+.grid-sort-header{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.grid-sort-header-right{
+    justify-content:flex-end;
+}
+
+.grid-sort-btn{
+    width:25px;
+    min-width:25px;
+    height:25px;
+    padding:0;
+    margin:0;
+    border:1px solid rgba(56, 189, 248, .55);
+    border-radius:5px;
+    background:rgba(56, 189, 248, .10);
+    color:#38bdf8;
+    font-size:13px;
+    line-height:23px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.grid-sort-btn:hover{
+    background:rgba(56, 189, 248, .20);
+}
