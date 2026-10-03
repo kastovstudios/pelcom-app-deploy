@@ -94,5 +94,22 @@ public static class Database
             migracao.CommandText = "ALTER TABLE Usuarios ADD COLUMN PrecisaTrocarSenha INTEGER NOT NULL DEFAULT 0";
             migracao.ExecuteNonQuery();
         }
+
+        // Exclusão do catálogo sem remover os vínculos dos consumos anteriores.
+        using var verificarProduto = conn.CreateCommand();
+        verificarProduto.CommandText = "PRAGMA table_info(Produtos)";
+        bool temExcluido = false;
+        using (var readerProduto = verificarProduto.ExecuteReader())
+        {
+            while (readerProduto.Read())
+                if (string.Equals(readerProduto["name"]?.ToString(), "Excluido", StringComparison.OrdinalIgnoreCase))
+                    temExcluido = true;
+        }
+        if (!temExcluido)
+        {
+            using var migrarProduto = conn.CreateCommand();
+            migrarProduto.CommandText = "ALTER TABLE Produtos ADD COLUMN Excluido INTEGER NOT NULL DEFAULT 0";
+            migrarProduto.ExecuteNonQuery();
+        }
     }
 }

@@ -351,7 +351,7 @@ app.MapGet("/produtos", () =>
     conn.Open();
 
     var cmd = conn.CreateCommand();
-    cmd.CommandText = "SELECT * FROM Produtos";
+    cmd.CommandText = "SELECT Id, Nome, Preco FROM Produtos WHERE Excluido = 0";
 
     var reader = cmd.ExecuteReader();
     var lista = new List<object>();
@@ -388,6 +388,36 @@ app.MapPost("/admin/produto", async (HttpRequest request) =>
     return Results.Ok();
 });
 
+app.MapPut("/admin/produto/{id}", async (int id, HttpRequest request) =>
+{
+    if (!IsAdmin(request)) return Results.Unauthorized();
+    var dados = await request.ReadFromJsonAsync<ProdutoDTO>();
+    if (dados == null || string.IsNullOrWhiteSpace(dados.Nome) || !double.IsFinite(dados.Preco) || dados.Preco < 0)
+        return Results.BadRequest("Informe um nome e um preço válido.");
+    using var conn = Database.GetConnection();
+    conn.Open();
+    var cmd = conn.CreateCommand();
+    cmd.CommandText = "UPDATE Produtos SET Nome = @nome, Preco = @preco WHERE Id = @id AND Excluido = 0";
+    cmd.Parameters.AddWithValue("@nome", dados.Nome.Trim());
+    cmd.Parameters.AddWithValue("@preco", dados.Preco);
+    cmd.Parameters.AddWithValue("@id", id);
+    if (cmd.ExecuteNonQuery() == 0) return Results.NotFound("Produto não encontrado.");
+    return Results.Ok();
+});
+
+app.MapDelete("/admin/produto/{id}", (int id, HttpRequest request) =>
+{
+    if (!IsAdmin(request)) return Results.Unauthorized();
+    using var conn = Database.GetConnection();
+    conn.Open();
+    var cmd = conn.CreateCommand();
+    // Mantém o produto para os consumos e relatórios já registrados.
+    cmd.CommandText = "UPDATE Produtos SET Excluido = 1 WHERE Id = @id AND Excluido = 0";
+    cmd.Parameters.AddWithValue("@id", id);
+    if (cmd.ExecuteNonQuery() == 0) return Results.NotFound("Produto não encontrado.");
+    return Results.Ok();
+});
+
 app.MapPut("/admin/produto/{id}/preco", async (int id, HttpRequest request) =>
 {
     if (!IsAdmin(request)) return Results.Unauthorized();
@@ -401,7 +431,7 @@ app.MapPut("/admin/produto/{id}/preco", async (int id, HttpRequest request) =>
     conn.Open();
 
     var cmd = conn.CreateCommand();
-    cmd.CommandText = "UPDATE Produtos SET Preco = @preco WHERE Id = @id";
+    cmd.CommandText = "UPDATE Produtos SET Preco = @preco WHERE Id = @id AND Excluido = 0";
     cmd.Parameters.AddWithValue("@preco", dados.Preco);
     cmd.Parameters.AddWithValue("@id", id);
 
@@ -475,14 +505,14 @@ app.MapPost("/comprar", async (HttpRequest request) =>
         var precoCmd = conn.CreateCommand();
 
         precoCmd.CommandText =
-            "SELECT Preco FROM Produtos WHERE Id = @id";
+            "SELECT Preco FROM Produtos WHERE Id = @id AND Excluido = 0";
 
         precoCmd.Parameters.AddWithValue("@id", item.ProdutoId);
 
         var precoObj = precoCmd.ExecuteScalar();
 
         if (precoObj == null)
-            continue;
+            return Results.BadRequest("Produto indisponível. Atualize o catálogo.");
 
         double preco =
             Convert.ToDouble(precoObj);
@@ -1413,7 +1443,7 @@ app.MapPost("/admin/estoque/adicionar", async (HttpRequest request) =>
     conn.Open();
 
     var produtoCmd = conn.CreateCommand();
-    produtoCmd.CommandText = "SELECT COUNT(*) FROM Produtos WHERE Id = @id";
+    produtoCmd.CommandText = "SELECT COUNT(*) FROM Produtos WHERE Id = @id AND Excluido = 0";
     produtoCmd.Parameters.AddWithValue("@id", dto.ProdutoId);
 
     if (Convert.ToInt32(produtoCmd.ExecuteScalar()) == 0)
@@ -1616,6 +1646,13 @@ app.MapPost("/admin/adicionar", async (HttpRequest request) =>
 
     // receber dados
     var dto = await request.ReadFromJsonAsync<CompraAdminDTO>();
+    if (dto == null) return Results.BadRequest("Compra inválida.");
+    using var produtoAtivo = conn.CreateCommand();
+    produtoAtivo.CommandText = "SELECT COUNT(*) FROM Produtos WHERE Id = @id AND Excluido = 0";
+    produtoAtivo.Parameters.AddWithValue("@id", dto.ProdutoId);
+    if (Convert.ToInt32(produtoAtivo.ExecuteScalar()) == 0)
+        return Results.BadRequest("Produto indisponível. Atualize o catálogo.");
+
 
     var cmd = conn.CreateCommand();
 
