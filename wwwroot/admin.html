@@ -632,7 +632,6 @@ async function carregarGridClientes(){
         const divida = document.createElement("span");
         divida.className = "grid-cliente-valor";
         divida.textContent = resumoPagamentoTexto(c);
-        divida.classList.add("resumo-pagamento");
         if(c.pago) divida.classList.add("status-pago");
         linha.append(identificacao, divida);
         lista.append(linha);
@@ -641,8 +640,8 @@ async function carregarGridClientes(){
 
 
 function resumoPagamentoTexto(data){
-    const moeda = valor => Number(valor || 0).toFixed(2).replace('.', ',');
-    return `Consumido: R$ ${moeda(data.total)} | Pago: R$ ${moeda(data.valorPago)} | Pendente: R$ ${moeda(data.saldo)} — ${data.pago ? 'Pago' : Number(data.saldo) > 0 ? 'Pendente' : 'Sem pendência'}`;
+    const valor = Number(data.pago ? data.total : data.saldo).toFixed(2).replace('.', ',');
+    return `R$ ${valor}${data.pago ? ' - Pago' : ''}`;
 }
 
 async function marcarPagamentoCliente(cliente, periodoId, pago, botao){
@@ -799,6 +798,7 @@ async function carregarHistorico(){
     });
     document.getElementById("totalClienteAdmin").innerText =
     resumoPagamentoTexto(data);
+    document.getElementById("totalClienteAdmin").classList.toggle("status-pago", Boolean(data.pago));
     document.getElementById("btnCobrarCliente").disabled = Number(data.saldo) <= 0;
 }
 

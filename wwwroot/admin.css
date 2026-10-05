@@ -506,5 +506,4 @@ body > * {
 /* Controle de pagamento mensal */
 .btn-pagamento { padding: 6px 10px; margin: 0; font-size: 12px; cursor: pointer; }
 .btn-pagamento:disabled { opacity: .5; cursor: default; }
-.grid-cliente-row > .resumo-pagamento { width: 48%; white-space: normal; font-size: 12px; line-height: 1.6; }
 .status-pago { color: #4ade80; }
