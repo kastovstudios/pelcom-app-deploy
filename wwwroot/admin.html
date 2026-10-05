@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="admin.css">
 <title>Admin</title>
+<link rel="stylesheet" href="interface.css">
+<script src="interface.js" defer></script>
 </head>
 
-<body>
+<body class="ui-page ui-admin" data-page="admin">
 
 <div class="container">
 
-    <div class="sidebar">
+    <nav class="sidebar">
         <h3>Admin</h3>
         <button onclick="mostrar('dashboard')">Dashboard</button>
         <button onclick="mostrar('clientes')">Clientes</button>
@@ -20,7 +22,7 @@
         <button onclick="mostrar('relatorios')">Relatórios</button>
         <button onclick="mostrar('configuracoes')">Configurações</button>
         <button onclick="home()">Home</button>
-    </div>
+    </nav>
 
     <div class="content">
 
