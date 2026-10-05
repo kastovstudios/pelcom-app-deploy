@@ -26,6 +26,8 @@
 
     <div id="lista" class="historico-lista"></div>
 
+    <p id="statusPagamento" role="status"></p>
+
     <div id="total" class="historico-total"></div>
 
 </div>
@@ -100,6 +102,7 @@ async function carregarHistorico() {
     }
 
     const data = await res.json();
+    if(periodoId !== document.getElementById("periodoCliente").value) return;
 
     const lista = document.getElementById("lista");
     lista.innerHTML = "";
@@ -139,7 +142,12 @@ async function carregarHistorico() {
     });
 
     document.getElementById("total").innerText =
-        "TOTAL: R$ " + data.total.toFixed(2);
+        "CONSUMIDO: R$ " + data.total.toFixed(2).replace('.', ',') +
+        " | PAGO: R$ " + Number(data.valorPago).toFixed(2).replace('.', ',') +
+        " | PENDENTE: R$ " + Number(data.saldo).toFixed(2).replace('.', ',');
+    const status = document.getElementById("statusPagamento");
+    status.textContent = data.pago ? "Pago neste mês" : Number(data.saldo) > 0 ? "Pagamento pendente neste mês" : "Sem pendência neste mês";
+    status.style.color = data.pago ? "#4ade80" : "inherit";
 }
 
 init();

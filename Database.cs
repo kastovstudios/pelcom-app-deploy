@@ -111,5 +111,18 @@ public static class Database
             migrarProduto.CommandText = "ALTER TABLE Produtos ADD COLUMN Excluido INTEGER NOT NULL DEFAULT 0";
             migrarProduto.ExecuteNonQuery();
         }
+
+        using var pagamentos = conn.CreateCommand();
+        pagamentos.CommandText = @"
+            CREATE TABLE IF NOT EXISTS PagamentosMensais (
+                UsuarioId INTEGER NOT NULL,
+                PeriodoId INTEGER NOT NULL,
+                MarcadoPago INTEGER NOT NULL DEFAULT 0,
+                ValorPago REAL NOT NULL DEFAULT 0,
+                AtualizadoEm TEXT NOT NULL,
+                AdminId INTEGER NOT NULL,
+                PRIMARY KEY (UsuarioId, PeriodoId)
+            )";
+        pagamentos.ExecuteNonQuery();
     }
 }
